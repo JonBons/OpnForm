@@ -8,6 +8,7 @@
         v-if="label && !hideFieldName"
         :label="label"
         :theme="theme"
+        :hide-field-name-desktop="hideFieldNameDesktop"
         :required="required"
         :native-for="id ? id : name"
         :uppercase-labels="uppercaseLabels"
@@ -76,6 +77,7 @@ defineProps({
   inputStyle: {type: Object, required: false},
   help: {type: String, required: false},
   helpPosition: {type: String, default: "below_input"},
+  hideFieldNameDesktop: {type: Boolean, default: true},
   uppercaseLabels: {type: Boolean, default: true},
   hideFieldName: {type: Boolean, default: true},
   required: {type: Boolean, default: false},

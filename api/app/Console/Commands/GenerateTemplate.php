@@ -87,6 +87,7 @@ class GenerateTemplate extends Command
                         "generates_uuid": false,
                         "max_char_limit": "2000",
                         "hide_field_name": false,
+                        "hide_field_name_desktop": false,
                         "show_char_limit": false
                     },
                     {

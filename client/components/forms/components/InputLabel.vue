@@ -5,6 +5,7 @@
     :class="[
       theme.default.label,
       { 'uppercase text-xs': uppercaseLabels, 'text-sm/none': !uppercaseLabels },
+      { 'sm:invisible': hideFieldNameDesktop, '': !hideFieldNameDesktop },
     ]"
   >
     <slot>
@@ -33,6 +34,7 @@ export default {
         return CachedDefaultTheme.getInstance()
       }
     },
+    hideFieldNameDesktop: { type: Boolean, default: false },
     uppercaseLabels: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     label: { type: String, required: true },

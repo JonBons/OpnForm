@@ -14,6 +14,7 @@ export default {
     uppercaseLabels: { type: Boolean, default: false },
     help: { type: String, default: null },
     helpPosition: { type: String, default: "below_input" },
+    hideFieldNameDesktop: { type: Boolean, default: false },
     theme: {
       type: Object, default: () => {
         const theme = inject("theme", null)

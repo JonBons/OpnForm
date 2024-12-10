@@ -317,6 +317,12 @@
       />
 
       <toggle-switch-input
+        :form="field"
+        name="hide_field_name_desktop"
+        label="Hide field name on desktop"
+      />
+
+      <toggle-switch-input
         v-if="field.type === 'phone_number'"
         :form="field"
         name="use_simple_text_input"
