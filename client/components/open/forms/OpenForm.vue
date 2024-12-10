@@ -514,11 +514,13 @@ export default {
         formData[field.id] = new Date().toISOString()
       } else if (field.type === 'matrix' && !formData[field.id]) {
         formData[field.id] = {...field.prefill}
+      } else if (field.type === 'table' && !formData[field.id]) {
+        formData[field.id] = {...field.prefill}
       } else if (!(field.id in formData)) {
         formData[field.id] = field.prefill
       }
     },
-    
+
     /**
      * Page Navigation
      */

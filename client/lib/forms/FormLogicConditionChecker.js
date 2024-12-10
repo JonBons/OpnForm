@@ -63,6 +63,8 @@ function propertyConditionMet(propertyCondition, value) {
       return filesConditionMet(propertyCondition, value)
     case "matrix":
       return matrixConditionMet(propertyCondition, value)
+    case "table":
+      return tableConditionMet(propertyCondition, value)
   }
   return false
 }
@@ -76,6 +78,20 @@ function checkObjectEquals(condition, fieldValue) {
 }
 
 function checkMatrixContains(condition, fieldValue)
+{
+  if (typeof fieldValue === "undefined" || typeof fieldValue !== "object") {
+    return false
+  }
+  const conditionValue = condition.value
+  for (const key in conditionValue) {
+    if(conditionValue[key] == fieldValue[key]){
+      return true
+    }
+  }
+  return false
+}
+
+function checkTableContains(condition, fieldValue)
 {
   if (typeof fieldValue === "undefined" || typeof fieldValue !== "object") {
     return false
@@ -404,6 +420,20 @@ function matrixConditionMet(propertyCondition, value) {
      return checkMatrixContains(propertyCondition, value)
     case "does_not_contain":
      return !checkMatrixContains(propertyCondition, value)
+  }
+  return false
+}
+
+function tableConditionMet(propertyCondition, value) {
+  switch (propertyCondition.operator) {
+    case "equals":
+      return checkObjectEquals(propertyCondition, value)
+    case "does_not_equal":
+      return !checkObjectEquals(propertyCondition, value)
+    case "contains":
+     return checkTableContains(propertyCondition, value)
+    case "does_not_contain":
+     return !checkTableContains(propertyCondition, value)
   }
   return false
 }

@@ -59,6 +59,7 @@ export default {
         email: "TextInput",
         phone_number: "TextInput",
         matrix: "MatrixInput",
+        table: "TableInput",
       },
     }
   },
@@ -93,8 +94,10 @@ export default {
         // componentData.withTime = true
       } else if (this.property.type === "checkbox") {
         componentData.label = this.property.name
-      }
-      else if (this.property.type === "matrix"){
+      } else if (this.property.type === "matrix") {
+        componentData.rows = this.property.rows
+        componentData.columns = this.property.columns
+      } else if (this.property.type === "table") {
         componentData.rows = this.property.rows
         componentData.columns = this.property.columns
       }
@@ -189,8 +192,14 @@ export default {
       ) {
         this.content.value = {}
       } else if (
-        this.property.type !== 'matrix' && 
-        (typeof this.content.value === 'boolean' || 
+        this.property.type !== 'matrix' &&
+        (typeof this.content.value === 'boolean' ||
+        typeof this.content.value === 'object')
+      ) {
+        this.content.value = null
+      } else if (
+        this.property.type !== 'table' &&
+        (typeof this.content.value === 'boolean' ||
         typeof this.content.value === 'object')
       ) {
         this.content.value = null

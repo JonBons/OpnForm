@@ -173,6 +173,11 @@
       @update:model-value="field = $event"
     />
 
+    <TableFieldOptions
+      :model-value="field"
+      @update:model-value="field = $event"
+    />
+
     <!--   Text Options   -->
     <div
       v-if="field.type === 'text' && displayBasedOnAdvanced"
@@ -404,6 +409,15 @@
           label="Pre-filled value"
         />
       </template>
+      <template v-else-if="field.type === 'table'">
+        <TableInput
+          :form="field"
+          :rows="field.rows"
+          :columns="field.columns"
+          name="prefill"
+          label="Pre-filled value"
+        />
+      </template>
       <date-input
         v-else-if="field.type === 'date' && field.prefill_today !== true"
         name="prefill"
@@ -560,7 +574,7 @@
         icon="i-heroicons-bars-3-bottom-left"
         title="Advanced Options"
       />
-      
+
       <toggle-switch-input
         :form="field"
         name="generates_uuid"
@@ -584,6 +598,7 @@ import timezones from '~/data/timezones.json'
 import countryCodes from '~/data/country_codes.json'
 import CountryFlag from 'vue-country-flag-next'
 import MatrixFieldOptions from './MatrixFieldOptions.vue'
+import TableFieldOptions from './TableFieldOptions.vue'
 import HiddenRequiredDisabled from './HiddenRequiredDisabled.vue'
 import EditorSectionHeader from '~/components/open/forms/components/form-components/EditorSectionHeader.vue'
 import { format } from 'date-fns'
@@ -591,7 +606,7 @@ import { default as _has } from 'lodash/has'
 
 export default {
   name: 'FieldOptions',
-  components: { CountryFlag, MatrixFieldOptions, HiddenRequiredDisabled, EditorSectionHeader },
+  components: { CountryFlag, MatrixFieldOptions, TableFieldOptions, HiddenRequiredDisabled, EditorSectionHeader },
   props: {
     field: {
       type: Object,
@@ -828,6 +843,13 @@ export default {
           selection_data:{
             'Row 1': null
           }
+        },
+        table: {
+          rows:['Row 1'],
+          columns: [1 ,2],
+          selection_data:{
+            'Row 1': null
+          }
         }
       }
       if (this.field.type in defaultFieldValues) {
@@ -839,6 +861,9 @@ export default {
       }
     },
     updateMatrixField(newField) {
+      this.field = newField
+    },
+    updateTableField(newField) {
       this.field = newField
     },
     onFieldMaxCharLimitChange(val) {

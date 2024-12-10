@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Forms\Form;
 use App\Rules\CustomFieldValidationRule;
 use App\Rules\MatrixValidationRule;
+use App\Rules\TableValidationRule;
 use App\Rules\StorageFile;
 use App\Rules\ValidHCaptcha;
 use App\Rules\ValidPhoneInputRule;
@@ -91,11 +92,15 @@ class AnswerFormRequest extends FormRequest
                     $rules[] = 'min:1';
                 } elseif ($property['type'] == 'matrix') {
                     $rules[] = new MatrixValidationRule($property, true);
+                } elseif ($property['type'] == 'table') {
+                    $rules[] = new TableValidationRule($property, true);
                 }
             } else {
                 $rules[] = 'nullable';
                 if ($property['type'] == 'matrix') {
                     $rules[] = new MatrixValidationRule($property, false);
+                } elseif ($property['type'] == 'table') {
+                    $rules[] = new TableValidationRule($property, false);
                 }
             }
 

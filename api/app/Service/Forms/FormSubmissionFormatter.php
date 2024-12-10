@@ -92,6 +92,17 @@ class FormSubmissionFormatter
         return implode(' | ', $parts);
     }
 
+    public function getTableString(array $val): string
+    {
+        $parts = [];
+        foreach ($val as $key => $value) {
+            if ($key !== null && $value !== null) {
+                $parts[] = "$key: $value";
+            }
+        }
+        return implode(' | ', $parts);
+    }
+
     /**
      * Return a nice "FieldName": "Field Response" array
      * - If createLink enabled, returns html link for emails and links
@@ -158,6 +169,8 @@ class FormSubmissionFormatter
                 }
             } elseif ($field['type'] == 'matrix' && is_array($data[$field['id']])) {
                 $returnArray[$field['name']] = $this->getMatrixString($data[$field['id']]);
+            } elseif ($field['type'] == 'table' && is_array($data[$field['id']])) {
+                $returnArray[$field['name']] = $this->getTableString($data[$field['id']]);
             } elseif (in_array($field['type'], ['files', 'signature'])) {
                 if ($this->outputStringsOnly) {
                     $formId = $this->form->id;
@@ -234,6 +247,8 @@ class FormSubmissionFormatter
                 }
             } elseif ($field['type'] == 'matrix') {
                 $field['value'] = str_replace(' | ', "\n", $this->getMatrixString($data[$field['id']]));
+            } elseif ($field['type'] == 'table') {
+                $field['value'] = str_replace(' | ', "\n", $this->getTableString($data[$field['id']]));
             } elseif (in_array($field['type'], ['files', 'signature'])) {
                 if ($this->outputStringsOnly) {
                     $formId = $this->form->id;

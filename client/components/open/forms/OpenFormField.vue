@@ -223,7 +223,8 @@ export default {
         url: 'TextInput',
         email: 'TextInput',
         phone_number: 'TextInput',
-        matrix: 'MatrixInput'
+        matrix: 'MatrixInput',
+        table: 'TableInput'
       }[field.type]
     },
     isPublicFormPage() {
@@ -334,6 +335,11 @@ export default {
       }
 
       if (field.type === 'matrix') {
+        inputProperties.rows = field.rows
+        inputProperties.columns = field.columns
+      }
+
+      if (field.type === 'table') {
         inputProperties.rows = field.rows
         inputProperties.columns = field.columns
       }

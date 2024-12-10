@@ -74,6 +74,8 @@ class FormLogicConditionChecker
                 return $this->filesConditionMet($propertyCondition, $value);
             case 'matrix':
                 return $this->matrixConditionMet($propertyCondition, $value);
+            case 'table':
+                return $this->tableConditionMet($propertyCondition, $value);
         }
 
         return false;
@@ -107,6 +109,30 @@ class FormLogicConditionChecker
     }
 
     private function checkMatrixEquals($condition, $fieldValue): bool
+    {
+        foreach ($condition['value'] as $key => $value) {
+            if ($condition['value'][$key] !== $fieldValue[$key]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function checkTableContains($condition, $fieldValue): bool
+    {
+
+        foreach ($condition['value'] as $key => $value) {
+            if (!(array_key_exists($key, $condition['value']) && array_key_exists($key, $fieldValue))) {
+                return false;
+            }
+            if ($condition['value'][$key] == $fieldValue[$key]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function checkTableEquals($condition, $fieldValue): bool
     {
         foreach ($condition['value'] as $key => $value) {
             if ($condition['value'][$key] !== $fieldValue[$key]) {
@@ -446,6 +472,22 @@ class FormLogicConditionChecker
                 return $this->checkMatrixContains($propertyCondition, $value);
             case 'does_not_contain':
                 return !$this->checkMatrixContains($propertyCondition, $value);
+        }
+
+        return false;
+    }
+
+    private function tableConditionMet(array $propertyCondition, $value): bool
+    {
+        switch ($propertyCondition['operator']) {
+            case 'equals':
+                return $this->checkTableEquals($propertyCondition, $value);
+            case 'does_not_equal':
+                return !$this->checkTableEquals($propertyCondition, $value);
+            case 'contains':
+                return $this->checkTableContains($propertyCondition, $value);
+            case 'does_not_contain':
+                return !$this->checkTableContains($propertyCondition, $value);
         }
 
         return false;

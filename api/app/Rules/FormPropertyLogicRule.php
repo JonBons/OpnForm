@@ -101,6 +101,34 @@ class FormPropertyLogicRule implements DataAwareRule, ValidationRule
                 ],
             ],
         ],
+        'table' => [
+            'comparators' => [
+                'equals' => [
+                    'expected_type' => 'object',
+                    'format' => [
+                        'type' => 'object',
+                    ],
+                ],
+                'does_not_equal' => [
+                    'expected_type' => 'object',
+                    'format' => [
+                        'type' => 'object',
+                    ],
+                ],
+                'contains' => [
+                    'expected_type' => 'object',
+                    'format' => [
+                        'type' => 'object',
+                    ],
+                ],
+                'does_not_contain' => [
+                    'expected_type' => 'object',
+                    'format' => [
+                        'type' => 'object',
+                    ],
+                ],
+            ],
+        ],
         'url' => [
             'comparators' => [
                 'equals' => [
